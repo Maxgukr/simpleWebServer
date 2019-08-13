@@ -1,0 +1,24 @@
+In file included from src/Server.h:7:0,
+                 from src/Server.cc:1:
+src/Task.h:18:14: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+ char *path = "/home/Code/build/release/WebServer";
+              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/Task.h: In member function ‘void task::response(char*, int)’:
+src/Task.h:35:55: warning: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘size_t {aka long unsigned int}’ [-Wformat=]
+   "content-length:%d\r\n\r\n", status, strlen(message));
+                                        ~~~~~~~~~~~~~~~^
+In file included from src/Server.cc:2:0:
+src/Util.h: At global scope:
+src/Util.h:6:9: error: expected initializer before ‘readn’
+ ssize_t readn(int fd, void *buff, size_t n);
+         ^~~~~
+In file included from src/Server.h:7:0,
+                 from src/Server.cc:1:
+src/Task.h: In member function ‘void task::response(char*, int)’:
+src/Task.h:38:8: warning: ignoring return value of ‘ssize_t write(int, const void*, size_t)’, declared with attribute warn_unused_result [-Wunused-result]
+   write(connfd, buf, strlen(buf));
+   ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+src/Task.h: In member function ‘void task::response_file(int, int)’:
+src/Task.h:46:8: warning: ignoring return value of ‘ssize_t write(int, const void*, size_t)’, declared with attribute warn_unused_result [-Wunused-result]
+   write(connfd, buf, strlen(buf));
+   ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
