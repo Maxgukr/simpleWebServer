@@ -20,7 +20,7 @@ private:
     static const int MAXFDS = 100000;
     int epollFd_;
     std::vector<epoll_event> events_;
-    std::map<int, std::shared_ptr<Channel> > fd2Channel_;
+    std::map<int, std::shared_ptr<Channel> > fd2Channel_; //文件描述符和通道之间的映射，每个文件描述符对应一个同道
 };
 
 #endif

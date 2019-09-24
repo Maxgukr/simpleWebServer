@@ -10,7 +10,7 @@
 const int EVENTSUM = 4096;
 const int EPOLLWAIT_TIME = 10000;
 
-typedef shared_ptr<Channel> SP_Channel;
+//typedef std::shared_ptr<Channel> SP_Channel;
 
 Epoll::Epoll():
     epollFd_(epoll_create1(EPOLL_CLOEXEC)),
@@ -25,7 +25,7 @@ Epoll::~Epoll()
 }
 
 // 注册新描述符
-void Epoll::epoll_operate(SP_Channeel req, int op)
+void Epoll::epoll_operate(SP_Channel req, int op)
 {
     int fd = req->getFd(); //获得对应的文件描述符
     //创建新的　epoll_event 对象
@@ -63,7 +63,7 @@ std::vector<SP_Channel> Epoll::poll()
     }
 }
 
-std::vector<SP_Channel> Epoll::getEventReq(int eventNUms)
+std::vector<SP_Channel> Epoll::getEventReq(int eventNums)
 {
     std::vector<SP_Channel> req_data;
     for(int i=0;i<eventNums;i++)

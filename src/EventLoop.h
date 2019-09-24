@@ -36,7 +36,7 @@ public:
         {
             //cout << "doing" << endl;
             ret.clear();
-            ret = poller_->poll();
+            ret = poller_->poll(); //返回活跃同道列表
             eventHandling_ = true;
             for (auto &it : ret)
                 it->handleEvents();

@@ -8,7 +8,6 @@
 //前向申明
 
 class EventLoop;
-class HttpData;
 
 class Channel
 {
