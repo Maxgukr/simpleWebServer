@@ -13,59 +13,22 @@ class EventLoop
 {
 public:
     typedef std::function<void()> Functor;
-    EventLoop():
-    looping_(false),
-    poller_(new Epoll()),
-    //wakeupFd_(createEventfd()),
-    quit_(false),
-    eventHandling_(false)
-    {
+    EventLoop();
+    ~EventLoop();
 
-    }
+    void loop();
 
-    ~EventLoop()
-    { }
-
-    void loop()
-    {
-        assert(!looping_);
-        looping_ = true;
-        quit_ = false;
-        std::vector<SP_Channel> ret;
-        while (!quit_)
-        {
-            //cout << "doing" << endl;
-            ret.clear();
-            ret = poller_->poll(); //返回活跃同道列表
-            eventHandling_ = true;
-            for (auto &it : ret)
-                it->handleEvents();
-            eventHandling_ = false;
-        }
-    looping_ = false;
-    }
-
-    void quit()
-    {
-        quit_ = true;
-    }
+    void quit();
     /* TODO:
     void shutdown(shared_ptr<Channel> channel)
     {
         shutDown(channel->getFd(), SHUT_WR);
     }*/
-    void removeFromPoller(std::shared_ptr<Channel> channel)
-    {
-        poller_->epoll_operate(channel, EPOLL_CTL_DEL);
-    }
-    void updatePoller(std::shared_ptr<Channel> channel)
-    {
-        poller_->epoll_operate(channel, EPOLL_CTL_MOD);
-    }
-    void addToPoller(std::shared_ptr<Channel> channel)
-    {
-        poller_->epoll_operate(channel, EPOLL_CTL_ADD);
-    }
+    void removeFromPoller(std::shared_ptr<Channel> channel);
+
+    void updatePoller(std::shared_ptr<Channel> channel);
+
+    void addToPoller(std::shared_ptr<Channel> channel);
 
 private:
     bool looping_;

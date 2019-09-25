@@ -29,14 +29,17 @@ public:
     void addTask(T *task); //往线程池中添加任务
 
     //static ThreadPool* createThreadPool(int numThreads = 5, size_t maxQueueSize=100);
-    ThreadPool(int numThreads = 5, size_t maxQueueSize=100);
+    ThreadPool(int numThreads = 5, int maxQueueSize=100);
 
+    //ThreadPool<T>* createThreadPool(int numThreads, int maxQueueSize);
+
+    void start(); //开启线程池　完成初始化工作
 private: 
     
     bool isFull() const; //需要加锁保护 　判断任务队列是否是满的
     static void* runInThread(void *args); //线程池的运行函数
     T* take(); //获取任务
-    void start(); //开启线程池　完成初始化工作
+   
     void stop(); //销毁线程池
 
     mutable MutexLock mutex_;

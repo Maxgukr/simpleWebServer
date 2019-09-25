@@ -5,7 +5,7 @@
 
 
 template<typename T>
-ThreadPool<T>::ThreadPool(int numThreads, size_t maxQueueSize)
+ThreadPool<T>::ThreadPool(int numThreads, int maxQueueSize)
     :mutex_(),
     notEmpty_(mutex_),
     notFull_(mutex_),
@@ -14,19 +14,19 @@ ThreadPool<T>::ThreadPool(int numThreads, size_t maxQueueSize)
     running_(false)
 {
     printf("creating thread pool...\n");
-    start();
-    printf("create thread pool successful\n");
+    //start();
+    //printf("create thread pool successful\n");
 }
 
-/* 
+/*
 template<typename T>
-ThreadPool<T>* ThreadPool<T>::createThreadPool(int numThreads, size_t maxQueueSize)
+ThreadPool<T>* ThreadPool<T>::createThreadPool(int numThreads, int maxQueueSize)
 {
-    static ThreadPool* pThreadPool = new class ThreadPool(numThreads, maxQueueSize);
+    static ThreadPool<T>* pThreadPool = new class ThreadPool<T>::ThreadPool(numThreads, maxQueueSize);
     return pThreadPool;
 }
-*/
 
+*/
 template<typename T>
 ThreadPool<T>::~ThreadPool()
 {
@@ -56,7 +56,7 @@ void ThreadPool<T>::start()
     {
         printf("thread id %lu\n", threads_[i]);
     }
-    
+    printf("create thread pool successful\n");
 }
 
 template<typename T>

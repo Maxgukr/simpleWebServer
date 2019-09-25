@@ -6,11 +6,13 @@
 #include <arpa/inet.h>
 #include <stdio.h>
 
-Server::Server(EventLoop* loop, int threadNum, int port):
+Server::Server(EventLoop* loop, int threadNum, int maxQueueSize, int port):
     loop_(loop),
     threadNum_(threadNum),
+    maxQueueSize_(maxQueueSize),
     started_(false),
     acceptChannel_(new Channel(loop_)),
+    //thread_pool_(ThreadPool<task>::createThreadPool(threadNum_, maxQueueSize_)),
     port_(port),
     listenFd_(socket_bind_listen(port_))
 {
@@ -22,10 +24,17 @@ Server::Server(EventLoop* loop, int threadNum, int port):
     }
 }
 
+Server::~Server()
+{
+    delete loop_;
+    delete thread_pool_;
+}
+
 void Server::start()
 {
-    static ThreadPool<task>  thread_pool(threadNum_); //创建线程池,静态线程池,全局唯一
-
+    thread_pool_ = new class ThreadPool<task>::ThreadPool(threadNum_, maxQueueSize_); //默认的复制构造函数
+   
+    thread_pool_->start();
     acceptChannel_->setEvents(EPOLLIN); //读事件　水平触发
     acceptChannel_->setReadHandler(std::bind(&Server::handNewConn, this)); //处理新的连接
     acceptChannel_->setConnHandler(std::bind(&Server::handThisConn, this)); //处理本次连接
@@ -63,6 +72,11 @@ void Server::handNewConn()
 
         //向任务队列中添加任务
         task *t = new task(accept_fd);
-        thread_pool->addTask(t); //交给线程池中的线程去执行这个连接
+        thread_pool_->addTask(t); //交给线程池中的线程去执行这个连接
     }
+}
+
+void Server::handThisConn()
+{ 
+    loop_->updatePoller(acceptChannel_); 
 }

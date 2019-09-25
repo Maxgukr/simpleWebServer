@@ -1,7 +1,7 @@
 # Makefile
 # tool marcros
 CC := g++
-CCFLAG := -std=c++11 -Wall -O3 -D_PTHREADS
+CCFLAG := -std=c++11 -w -O3 -D_PTHREADS
 DEBGFLAG := -g
 CCOBJFLAG := $(CCFLAG) -c
 LIBS    := -lpthread
