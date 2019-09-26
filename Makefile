@@ -1,7 +1,7 @@
 # Makefile
 # tool marcros
 CC := g++
-CCFLAG := -std=c++11 -w -O3 -D_PTHREADS
+CCFLAG := -std=c++11 -Wall -O3 -D_PTHREADS
 DEBGFLAG := -g
 CCOBJFLAG := $(CCFLAG) -c
 LIBS    := -lpthread
@@ -39,16 +39,16 @@ default: all
 
 # non-phony targets
 $(TARGET):$(OBJ)
-	$(CC) $(CCFLAG) -o $@ $? 2>errorlog.txt
+	$(CC) $(CCFLAG) -o $@ $^ $(LIBS) 2>errorlog.txt
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.cc*
-	$(CC) $(CCOBJFLAG) -o $@ $< $(LIBS) 2>errorlog.txt
+	$(CC) $(CCOBJFLAG) -o $@ $< 2>errorlog.txt
 
 $(DBG_PATH)/%.o: $(SRC_PATH)/%.cc*
-	$(CC) $(CCOBJFLAG) $(DBGFLAG) -o $@ $< $(LIBS) 2>errorlog.txt
+	$(CC) $(CCOBJFLAG) $(DBGFLAG) -o $@ $<  2>errorlog.txt
 
 $(TARGET_DEBUG): $(OBJ_DEBUG)
-	$(CC) $(CCFLAG) $(DBGFLAG) $? -o $@ 2>errorlog.txt
+	$(CC) $(CCFLAG) $(DBGFLAG) $? -o $@ $(LIBS) 2>errorlog.txt
 
 # phony rules
 .PHONY: all debug clean distclean

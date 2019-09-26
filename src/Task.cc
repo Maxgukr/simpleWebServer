@@ -1,5 +1,7 @@
 #include "Task.h"
 
+//path = "/home/Code/build/release/WebServer";
+
 task::task()
 {
 
@@ -16,15 +18,16 @@ task::~task()
 }
 
 void task::response(char *message, int status)
-	{
-		char buf[512];
-		sprintf(buf, "HTTP/1.1 %d OK\r\nConnection: Close\r\n"
-		"content-length:%d\r\n\r\n", status, strlen(message));
+{
+	char buf[512];
+	sprintf(buf, "HTTP/1.1 %d OK\r\nConnection: Close\r\n"
+	"content-length:%d\r\n\r\n", status, strlen(message));
 
-		sprintf(buf, "%s%s", buf, message);
-		write(connfd, buf, strlen(buf));
+	sprintf(buf, "%s%s", buf, message);
+	write(connfd, buf, strlen(buf));
 
-	}
+}
+
 void task::response_file(int size, int status)
 {
     char buf[128];

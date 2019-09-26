@@ -1,7 +1,6 @@
-#include "EventLoop.h"
 #include "Server.h"
 
-int main(int argc, char * argv[])
+int main()
 {
     int threadNum = 4;
     int maxQueueSize = 100;
@@ -9,6 +8,6 @@ int main(int argc, char * argv[])
     EventLoop mainLoop;
     Server myHttpServer(&mainLoop, threadNum, maxQueueSize, port);
     myHttpServer.start();
-    mainLoop.loop();
+    //mainLoop.loop();
     return 0;
 }

@@ -15,13 +15,13 @@
 #include <sys/sendfile.h>
 #include <sys/wait.h>
 
-char *path = "/home/Code/build/release/WebServer";
 const int BUFFER_SIZE = 4096;
 
 class task
 {
 private:
 	int connfd;
+	char *path = "/home/Code/build/release/WebServer";
 
 public:
 	task();

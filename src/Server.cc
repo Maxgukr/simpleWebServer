@@ -71,7 +71,7 @@ void Server::handNewConn()
         setSocketNodelay(accept_fd);
 
         //向任务队列中添加任务
-        task *t = new task(accept_fd);
+        task *t = new class task(accept_fd);
         thread_pool_->addTask(t); //交给线程池中的线程去执行这个连接
     }
 }
